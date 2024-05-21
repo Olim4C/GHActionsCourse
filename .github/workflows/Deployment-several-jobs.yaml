@@ -1,4 +1,4 @@
-name: Deplayment Artifact
+name: Deplayment Artifact with several jobs
 on: push
 
 jobs:
@@ -12,6 +12,7 @@ jobs:
             - name: Lint
               run: npm run lint
     Test:
+        needs: Lint
         runs-on: ubuntu-latest
         steps:
             - name: Get code
@@ -19,8 +20,9 @@ jobs:
             - name: Install dependencies
               run: npm ci
             - name: Test code
-              run: npm test            
+              run: npm run test            
     Deploy:
+        needs: Test
         runs-on: ubuntu-latest
         steps:
             - name: Get code
